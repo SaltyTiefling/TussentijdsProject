@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TussentijdsProject"
         mc:Ignorable="d"
-        Title="LoginForm" Height="300" Width="500" MinHeight="300" MinWidth="500">
-    <Grid Margin="50 10">
+        Title="LoginForm" Height="300" Width="500" MinHeight="300" MinWidth="500" Loaded="Window_Loaded">
+    <Grid Margin="20 10">
         <Grid.RowDefinitions>
             <RowDefinition Height="6*"/>
             <RowDefinition Height="2*"/>
@@ -23,7 +23,15 @@
                 <ColumnDefinition Width="8*"/>
             </Grid.ColumnDefinitions>
             <TextBlock HorizontalAlignment="Stretch"  Text="login:" VerticalAlignment="Top"/>
-            <TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5 0"/>
+            <ComboBox x:Name="cbLogin" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5 0">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Voornaam}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </Grid>
         <Grid Margin="5" Grid.Row="2">
             <Grid.ColumnDefinitions>
@@ -31,8 +39,9 @@
                 <ColumnDefinition Width="8*"/>
             </Grid.ColumnDefinitions>
             <TextBlock HorizontalAlignment="Stretch"  Text="Wachtwoord:" VerticalAlignment="Top"/>
-            <TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5 0"/>
+            <TextBox x:Name="txtWachtwoord" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5 0"/>
         </Grid>
+        <Button Grid.Row="3" HorizontalAlignment="left" Width="100" Content="new login" Margin="10 0" Click="NewLogin" />
         <Button Grid.Row="3" HorizontalAlignment="Right" Width="100" Content="Log In" Margin="10 0" Click="Button_Click_1" />
     </Grid>
 </Window>
