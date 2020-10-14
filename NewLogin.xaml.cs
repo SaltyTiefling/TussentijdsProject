@@ -33,11 +33,31 @@ namespace TussentijdsProject
         {
             using (tussentijds_projectEntities ctx = new tussentijds_projectEntities())
             {
-                string encrypted = Encrytion.Encrypt((cbLogin.SelectedItem as Personeelslid).Voornaam, txtWachtwoord.Text);
-                MessageBox.Show(encrypted);
-                ctx.Logins.Add(new Login(){PersoneelslidID = (cbLogin.SelectedItem as Personeelslid).PersoneelslidID, Wachtwoord = encrypted});
-                ctx.SaveChanges();
+                Personeelslid geselecteerdPersoon = (cbLogin.SelectedItem as Personeelslid);
+                string encrypted = Encrytion.Encrypt(geselecteerdPersoon.Voornaam, txtWachtwoord.Text);
+
+                var wachtwoordenInTable = ctx.Logins.Where(s => s.PersoneelslidID == geselecteerdPersoon.PersoneelslidID).Select(s => s.Wachtwoord);
+                if (!wachtwoordenInTable.Contains(encrypted))
+                {
+                    if (MessageBox.Show("bent u zeker?", "zeker?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        ctx.Logins.Add(new Login() { PersoneelslidID = geselecteerdPersoon.PersoneelslidID, Wachtwoord = encrypted });
+                        ctx.SaveChanges();
+                        MessageBox.Show("wachtwoord is opgeslagen");
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("wachtwoord is niet opgeslagen");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"dit wachtwoord bestaat al voor {geselecteerdPersoon.Voornaam}");
+                }
+
             }
+            this.Close();
         }
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)

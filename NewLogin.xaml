@@ -42,7 +42,7 @@
                 <TextBlock HorizontalAlignment="Stretch"  Text="Wachtwoord:" VerticalAlignment="Top"/>
                 <TextBox x:Name="txtWachtwoord" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5 0"/>
             </Grid>
-            <Button Grid.Row="3" HorizontalAlignment="Right" Width="100" Content="Log In" Margin="10 0" Click="Button_Click_1" />
+            <Button Grid.Row="3" HorizontalAlignment="Right" Width="100" Content="Save password" Margin="10 0" Click="Button_Click_1" />
         </Grid>
     </Grid>
 </Window>

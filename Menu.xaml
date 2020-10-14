@@ -1,0 +1,28 @@
+﻿<Window x:Class="TussentijdsProject.Menu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TussentijdsProject"
+        mc:Ignorable="d"
+        Title="Menu" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10">
+            <TextBlock x:Name="txtWelcome" >Welcome </TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1" >
+        <Button HorizontalAlignment="Stretch" VerticalAlignment="Center" Content="Databeheer" Margin="100 10"/>
+            <Button HorizontalAlignment="Stretch" VerticalAlignment="Center" Content="Overzicht" Margin="100 10"/>
+            <Button HorizontalAlignment="Stretch" VerticalAlignment="Center" Content="Bestelling" Margin="100 10"/>
+        </StackPanel>
+    </Grid>
+</Window>

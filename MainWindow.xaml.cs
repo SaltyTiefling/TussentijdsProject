@@ -33,12 +33,23 @@ namespace TussentijdsProject
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            string encrypted = Encrytion.Encrypt((cbLogin.SelectedItem as Personeelslid).Voornaam, txtWachtwoord.Text);
+            Personeelslid geselecteerdPersoon = (cbLogin.SelectedItem as Personeelslid);
+            string encrypted = Encrytion.Encrypt(geselecteerdPersoon.Voornaam, txtWachtwoord.Text);
 
             using (tussentijds_projectEntities ctx = new tussentijds_projectEntities())
             {
-                string wachtwoordInTable = ctx.Logins.Where(s => s.PersoneelslidID == 6).Select(s => s.Wachtwoord).FirstOrDefault();
-                MessageBox.Show($"{wachtwoordInTable} == {encrypted} : {(wachtwoordInTable.Equals(encrypted))}");
+                var wachtwoordenInTable = ctx.Logins.Where(s => s.PersoneelslidID == geselecteerdPersoon.PersoneelslidID).Select(s => s.Wachtwoord);
+                if (wachtwoordenInTable.Contains(encrypted))
+                {
+                    this.Hide();
+                    Menu menu = new Menu(geselecteerdPersoon);
+                    menu.ShowDialog();
+                    this.Show();
+                }
+                else
+                {
+                    MessageBox.Show($"dit is niet het juiste wachtwoord voor {geselecteerdPersoon.Voornaam}");
+                }
             }
         }
 
