@@ -20,11 +20,24 @@ namespace TussentijdsProject
     public partial class Menu : Window
     {
         Personeelslid user;
-        public Menu(Personeelslid User)
+        public Menu(Personeelslid user)
         {
-            user = User;
+            this.user = user;
             InitializeComponent();
+            
+            
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Databeheer databeheer = new Databeheer(user);
+            databeheer.ShowDialog();
+        }
+
+        private void txtWelcome_Loaded(object sender, RoutedEventArgs e)
+        {
             txtWelcome.Text += $" {user.Voornaam}";
+
         }
     }
 }

@@ -16,3 +16,8 @@
 
 (heb niet veel gedaan wegen de verwijdering van onze Jacuzzi waar ik mee moest helpen)
 
+### Dag 4 (Donderdag 15/10)
+- Menu verwijderd
+- databeheer aangemaakt
+- DataGrids aangemaakt en gekoppeld aan de databank
+

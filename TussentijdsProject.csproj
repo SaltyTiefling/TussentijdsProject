@@ -78,6 +78,9 @@
     <Compile Include="Categorie.cs">
       <DependentUpon>boekhoudModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Databeheer.xaml.cs">
+      <DependentUpon>Databeheer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Encrytion.cs" />
     <Compile Include="Klant.cs">
       <DependentUpon>boekhoudModel.tt</DependentUpon>
@@ -109,6 +112,10 @@
     <Compile Include="sysdiagram.cs">
       <DependentUpon>boekhoudModel.tt</DependentUpon>
     </Compile>
+    <Page Include="Databeheer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginForm.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

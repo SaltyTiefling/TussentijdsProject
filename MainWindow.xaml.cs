@@ -35,15 +35,15 @@ namespace TussentijdsProject
         {
             Personeelslid geselecteerdPersoon = (cbLogin.SelectedItem as Personeelslid);
             string encrypted = Encrytion.Encrypt(geselecteerdPersoon.Voornaam, txtWachtwoord.Text);
-
             using (tussentijds_projectEntities ctx = new tussentijds_projectEntities())
             {
-                var wachtwoordenInTable = ctx.Logins.Where(s => s.PersoneelslidID == geselecteerdPersoon.PersoneelslidID).Select(s => s.Wachtwoord);
+                List<string> wachtwoordenInTable = null;
+                wachtwoordenInTable = ctx.Logins.Where(s => s.PersoneelslidID == geselecteerdPersoon.PersoneelslidID).Select(s => s.Wachtwoord).ToList();
                 if (wachtwoordenInTable.Contains(encrypted))
                 {
                     this.Hide();
-                    Menu menu = new Menu(geselecteerdPersoon);
-                    menu.ShowDialog();
+                    Databeheer databeheer = new Databeheer(geselecteerdPersoon);
+                    databeheer.ShowDialog();
                     this.Show();
                 }
                 else

@@ -17,12 +17,12 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10">
-            <TextBlock x:Name="txtWelcome" >Welcome </TextBlock>
+            <TextBlock x:Name="txtWelcome" Loaded="txtWelcome_Loaded" >Welcome</TextBlock>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1" >
-        <Button HorizontalAlignment="Stretch" VerticalAlignment="Center" Content="Databeheer" Margin="100 10"/>
-            <Button HorizontalAlignment="Stretch" VerticalAlignment="Center" Content="Overzicht" Margin="100 10"/>
-            <Button HorizontalAlignment="Stretch" VerticalAlignment="Center" Content="Bestelling" Margin="100 10"/>
+            <Button IsEnabled="False" x:Name="btnDatabeheer" HorizontalAlignment="Stretch" VerticalAlignment="Center" Content="Databeheer" Margin="100 10" Click="Button_Click"/>
+            <Button IsEnabled="False" x:Name="btnOverzicht" HorizontalAlignment="Stretch" VerticalAlignment="Center" Content="Overzicht" Margin="100 10"/>
+            <Button IsEnabled="False" x:Name="btnBestellingen" HorizontalAlignment="Stretch" VerticalAlignment="Center" Content="Bestelling" Margin="100 10"/>
         </StackPanel>
     </Grid>
 </Window>
