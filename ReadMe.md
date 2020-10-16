@@ -21,3 +21,7 @@
 - databeheer aangemaakt
 - DataGrids aangemaakt en gekoppeld aan de databank
 
+### Dag 5 (Vrijdag 16/10)
+
+- Rollen aangemaakt
+- Eerste evaluatie gehad

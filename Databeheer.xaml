@@ -79,7 +79,16 @@
                         <DataGridTextColumn Header="Id" Binding="{Binding persoon.PersoneelslidID}"/>
                         <DataGridTextColumn Header="Voornaam" Binding="{Binding persoon.Voornaam}"/>
                         <DataGridTextColumn Header="Rollen" Width="*" Binding="{Binding Rollen}"/>
-                        <DataGridTemplateColumn/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Rollen" >
+                <DataGrid IsReadOnly="True" AutoGenerateColumns="False" x:Name="Rollenlijst">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="RolID" Binding="{Binding key.RolID}"/>
+                        <DataGridTextColumn Header="Rol" Binding="{Binding key.RolNaam}"/>
+                        <DataGridTextColumn Header="Personeel" Width="*" Binding="{Binding s}"/>
+
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>

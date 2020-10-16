@@ -68,6 +68,11 @@ namespace TussentijdsProject
                     persoon = ctx.Personeelslids.Where(s => s.PersoneelslidID == pr.Key).FirstOrDefault(),
                     Rollen = pr.ToList()
                 }).ToList();
+
+                Rollenlijst.ItemsSource = ctx.PersoneelslidRols.GroupBy(s => s.Rol).Select(s => new {
+                    key = s.Key,
+                    s = s.ToList()
+                }).ToList();
             }
         }
 
@@ -86,8 +91,9 @@ namespace TussentijdsProject
         {
             using (tussentijds_projectEntities ctx = new tussentijds_projectEntities())
             {
-                var userRolls = ctx.PersoneelslidRols.Where(s => s.PersoneelslidID == currentUser.PersoneelslidID).Select(s => s.Rol.RolNaam);
+                System.Linq.IQueryable<string> userRolls = ctx.PersoneelslidRols.Where(s => s.PersoneelslidID == currentUser.PersoneelslidID).Select(s => s.Rol.RolNaam);
                 Debug.WriteLine("rollen");
+
                 if (userRolls.Contains("Administrator"))
                 {
                     Console.WriteLine("je bent een admin");
