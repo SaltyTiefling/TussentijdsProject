@@ -25,3 +25,8 @@
 
 - Rollen aangemaakt
 - Eerste evaluatie gehad
+### Dag 6 (Maandag 19/10)
+
+- form aangemaakt voor producten
+- bekijk knop producten aangemaakt
+- nieuwe product proberen toe te voegen
