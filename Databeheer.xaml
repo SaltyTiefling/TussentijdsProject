@@ -15,9 +15,9 @@
             <RowDefinition Height="5*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TabControl>
+        <TabControl x:Name="tabs">
             <TabItem Header="Producten" >
-                <DataGrid IsReadOnly="True" x:Name="Productenlijst" AutoGenerateColumns="False">
+                <DataGrid SelectionMode="Single" IsReadOnly="True" SelectedValue="{Binding s}" x:Name="Productenlijst" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Id" Binding="{Binding s.ProductID}"/>
                         <DataGridTextColumn Header="Naam" Width="*" Binding="{Binding s.Naam}"/>
@@ -93,9 +93,13 @@
                 </DataGrid>
             </TabItem>
         </TabControl>
-
-        <StackPanel Grid.Row="1">
-
+        <StackPanel Grid.Column="1">
+            <StackPanel>
+                <Button x:Name="btnBekijk" Margin="10" Content="Bekijk" Click="Bekijk_Click" />
+            </StackPanel>
+            <StackPanel>
+                <Button x:Name="btnNieuw" Margin="10" Content="Nieuw" Click="New_Click" />
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>

@@ -108,6 +108,9 @@
     <Compile Include="Product.cs">
       <DependentUpon>boekhoudModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="productForm.xaml.cs">
+      <DependentUpon>productForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Rol.cs">
       <DependentUpon>boekhoudModel.tt</DependentUpon>
     </Compile>
@@ -145,6 +148,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="NewLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="productForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

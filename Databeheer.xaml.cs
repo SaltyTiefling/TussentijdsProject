@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -69,7 +71,8 @@ namespace TussentijdsProject
                     Rollen = pr.ToList()
                 }).ToList();
 
-                Rollenlijst.ItemsSource = ctx.PersoneelslidRols.GroupBy(s => s.Rol).Select(s => new {
+                Rollenlijst.ItemsSource = ctx.PersoneelslidRols.GroupBy(s => s.Rol).Select(s => new
+                {
                     key = s.Key,
                     s = s.ToList()
                 }).ToList();
@@ -109,6 +112,40 @@ namespace TussentijdsProject
                     Console.WriteLine("je bent een Verkoper");
                 }
 
+            }
+        }
+
+        private void New_Click(object sender, RoutedEventArgs e)
+        {
+            using (tussentijds_projectEntities ctx = new tussentijds_projectEntities())
+            {
+                switch (((tabs.SelectedValue as TabItem).Header.ToString()))
+                {
+                    case "Producten":
+                        productForm pf = new productForm(true);
+                        pf.ShowDialog();
+                        break;
+                    default:
+                        MessageBox.Show("er is iets mis gegaanselecteer een andere databank aub");
+                        break;
+                }
+            }
+        }
+        private void Bekijk_Click(object sender, RoutedEventArgs e)
+        {
+            using (tussentijds_projectEntities ctx = new tussentijds_projectEntities())
+            {
+                switch (((tabs.SelectedValue as TabItem).Header.ToString()))
+                {
+                    case "Producten":
+                        productForm pf = new productForm();
+                        pf.product = (ctx.Products.Select(s => s).ToList()[Productenlijst.SelectedIndex] as Product);
+                        pf.ShowDialog();
+                        break;
+                    default:
+                        MessageBox.Show("er is iets mis gegaanselecteer een andere databank aub");
+                        break;
+                }
             }
         }
     }
