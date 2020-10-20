@@ -20,38 +20,39 @@ namespace TussentijdsProject
     /// </summary>
     public partial class productForm : Window
     {
-        public Product product = new Product();
+        int productID;
         bool editable;
-        public productForm(bool editable = false)
+        public productForm(Personeelslid user, int productID, bool editable = false)
         {
+            this.productID = productID;
+
             this.editable = editable;
             InitializeComponent();
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            using (tussentijds_projectEntities ctx = new tussentijds_projectEntities())
+            using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
             {
-                product = new Product();
-                ctx.Products.Add(product);
+                var query = ctx.Products.Where(s => s.ProductID == productID).Select(s => s).FirstOrDefault();
+                query.Naam = txtNaam.Text;
+                query.Inkoopprijs = decimal.Parse(txtinpkoopprijs.Text);
+                query.Marge = decimal.Parse(txtMarge.Text);
+                query.Eenheid = decimal.Parse(txtEenheid.Text);
+                query.BTW = int.Parse(txtBtw.Text);
+                query.Categorie = (cbCategorie.SelectedItem as Categorie);
+                query.Leverancier = (cbLeverancier.SelectedItem as Leverancier);
                 ctx.SaveChanges();
-                
-                product.Naam = txtNaam.Text;
-                product.Inkoopprijs = decimal.Parse(txtinpkoopprijs.Text);
-                product.Marge = decimal.Parse(txtMarge.Text);
-                product.Eenheid = decimal.Parse(txtEenheid.Text);
-                product.BTW = int.Parse(txtBtw.Text);
-                product.Categorie = (cbCategorie.SelectedItem as Categorie);
-                product.Leverancier = (cbLeverancier.SelectedItem as Leverancier);
-                
-                this.Close();
             }
+            this.Close();
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            using (tussentijds_projectEntities ctx = new tussentijds_projectEntities())
+            using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
             {
+                var product = ctx.Products.Where(s => s.ProductID == productID).Select(s => s).FirstOrDefault();
                 lblId.Text = product.ProductID.ToString();
                 txtNaam.Text = product.Naam;
                 txtinpkoopprijs.Text = product.Inkoopprijs.ToString();
@@ -79,8 +80,8 @@ namespace TussentijdsProject
                 txtBtw.IsEnabled = editable;
                 cbCategorie.IsEnabled = editable;
                 cbLeverancier.IsEnabled = editable;
-            }
 
+            }
         }
     }
 }

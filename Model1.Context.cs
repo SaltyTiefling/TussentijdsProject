@@ -13,10 +13,10 @@ namespace TussentijdsProject
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class tussentijds_projectEntities : DbContext
+    public partial class tussentijds_projectEntities1 : DbContext
     {
-        public tussentijds_projectEntities()
-            : base("name=tussentijds_projectEntities")
+        public tussentijds_projectEntities1()
+            : base("name=tussentijds_projectEntities1")
         {
         }
     

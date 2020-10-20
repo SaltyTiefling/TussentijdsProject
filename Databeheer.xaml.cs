@@ -22,16 +22,19 @@ namespace TussentijdsProject
     /// </summary>
     public partial class Databeheer : Window
     {
-        Personeelslid currentUser = new Personeelslid();
+        public Personeelslid currentUser { get; } = new Personeelslid();
+        int selectedID = 1;
         public Databeheer(Personeelslid user)
         {
             currentUser = user;
             InitializeComponent();
+            LaadLijsten();
 
-            using (tussentijds_projectEntities ctx = new tussentijds_projectEntities())
+        }
+        private void LaadLijsten()
+        {
+            using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
             {
-
-
                 Productenlijst.ItemsSource = ctx.Products.Select(s => new
                 {
                     s,
@@ -42,6 +45,7 @@ namespace TussentijdsProject
                     Leverancier = s.Leverancier.Contactpersoon,
                     Categorie = s.Categorie.CategorieNaam
                 }).ToList();
+                Productenlijst.SelectedIndex = 0;
 
                 Bestellingenlijst.ItemsSource = ctx.Bestellings.Select(s => new
                 {
@@ -78,7 +82,6 @@ namespace TussentijdsProject
                 }).ToList();
             }
         }
-
         private string ListToString(List<string> list)
         {
             string answer = "";
@@ -92,7 +95,7 @@ namespace TussentijdsProject
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            using (tussentijds_projectEntities ctx = new tussentijds_projectEntities())
+            using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
             {
                 System.Linq.IQueryable<string> userRolls = ctx.PersoneelslidRols.Where(s => s.PersoneelslidID == currentUser.PersoneelslidID).Select(s => s.Rol.RolNaam);
                 Debug.WriteLine("rollen");
@@ -117,12 +120,15 @@ namespace TussentijdsProject
 
         private void New_Click(object sender, RoutedEventArgs e)
         {
-            using (tussentijds_projectEntities ctx = new tussentijds_projectEntities())
+            using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
             {
                 switch (((tabs.SelectedValue as TabItem).Header.ToString()))
                 {
                     case "Producten":
-                        productForm pf = new productForm(true);
+                        Product product = new Product();
+                        ctx.Products.Add(product);
+                        ctx.SaveChanges();
+                        productForm pf = new productForm(currentUser, product.ProductID, true);
                         pf.ShowDialog();
                         break;
                     default:
@@ -130,22 +136,73 @@ namespace TussentijdsProject
                         break;
                 }
             }
+            LaadLijsten();
         }
         private void Bekijk_Click(object sender, RoutedEventArgs e)
         {
-            using (tussentijds_projectEntities ctx = new tussentijds_projectEntities())
+            switch (((tabs.SelectedValue as TabItem).Header.ToString()))
+            {
+                case "Producten":
+                    productForm pf = new productForm(currentUser, selectedID);
+                    pf.ShowDialog();
+                    break;
+                default:
+                    MessageBox.Show("er is iets mis gegaanselecteer een andere databank aub");
+                    break;
+            }
+
+            LaadLijsten();
+        }
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+
+            switch (((tabs.SelectedValue as TabItem).Header.ToString()))
+            {
+                case "Producten":
+                    productForm pf = new productForm(currentUser, selectedID, true);
+                    pf.ShowDialog();
+                    break;
+                default:
+                    MessageBox.Show("er is iets mis gegaanselecteer een andere databank aub");
+                    break;
+
+            }
+            LaadLijsten();
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
             {
                 switch (((tabs.SelectedValue as TabItem).Header.ToString()))
                 {
                     case "Producten":
-                        productForm pf = new productForm();
-                        pf.product = (ctx.Products.Select(s => s).ToList()[Productenlijst.SelectedIndex] as Product);
-                        pf.ShowDialog();
+                        Product product = (ctx.Products.Select(s => s).ToList()[Productenlijst.SelectedIndex] as Product);
+                        ctx.Products.Remove(product);
+                        ctx.SaveChanges();
                         break;
                     default:
                         MessageBox.Show("er is iets mis gegaanselecteer een andere databank aub");
                         break;
                 }
+            }
+            LaadLijsten();
+        }
+
+        private void Productenlijst_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
+            {
+                if (Productenlijst.SelectedIndex >= 0)
+                {
+                    selectedID = (ctx.Products.Select(s => s).ToList()[Productenlijst.SelectedIndex] as Product).ProductID;
+                    btnDelete.IsEnabled = true;
+                }
+                else {
+                    btnDelete.IsEnabled = true;
+                }
+
             }
         }
     }

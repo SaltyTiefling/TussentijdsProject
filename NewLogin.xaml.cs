@@ -22,7 +22,7 @@ namespace TussentijdsProject
         public NewLogin()
         {
             InitializeComponent();
-            using (tussentijds_projectEntities ctx = new tussentijds_projectEntities())
+            using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
             {
                 cbLogin.ItemsSource = ctx.Personeelslids.Select(s => s).ToList();
                 cbLogin.SelectedIndex = 0;
@@ -31,7 +31,7 @@ namespace TussentijdsProject
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            using (tussentijds_projectEntities ctx = new tussentijds_projectEntities())
+            using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
             {
                 Personeelslid geselecteerdPersoon = (cbLogin.SelectedItem as Personeelslid);
                 string encrypted = Encrytion.Encrypt(geselecteerdPersoon.Voornaam, txtWachtwoord.Text);

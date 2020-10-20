@@ -89,7 +89,7 @@
           <Key>
             <PropertyRef Name="ProductID" />
           </Key>
-          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Naam" Type="nvarchar" MaxLength="50" />
           <Property Name="Inkoopprijs" Type="money" />
           <Property Name="Marge" Type="money" />
@@ -393,7 +393,7 @@
           <Key>
             <PropertyRef Name="ProductID" />
           </Key>
-          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Naam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Inkoopprijs" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Marge" Type="Decimal" Precision="19" Scale="4" />
@@ -543,7 +543,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="tussentijds_projectEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="tussentijds_projectEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Bestellings" EntityType="Self.Bestelling" />
           <EntitySet Name="BestellingProducts" EntityType="Self.BestellingProduct" />
           <EntitySet Name="Categories" EntityType="Self.Categorie" />
@@ -601,7 +601,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="tussentijds_projectEntities">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="tussentijds_projectEntities1">
           <EntitySetMapping Name="Bestellings">
             <EntityTypeMapping TypeName="Model.Bestelling">
               <MappingFragment StoreEntitySet="Bestelling">

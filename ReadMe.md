@@ -25,3 +25,14 @@
 
 - Rollen aangemaakt
 - Eerste evaluatie gehad
+
+### Dag 6 (Maandag 19/10)
+
+- form aangemaakt voor producten
+- bekijk knop producten aangemaakt
+- nieuwe product proberen toe te voegen
+
+### Dag 7 (Maandag 20/10)
+
+- delete button aangemaakt
+- heb geprobeerd de producten te kunnen aanpassen maar het lukt niet voor een of andere reden dus ga hulp moeten vragen

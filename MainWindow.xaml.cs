@@ -24,7 +24,7 @@ namespace TussentijdsProject
         public LoginForm()
         {
             InitializeComponent();
-            using (tussentijds_projectEntities ctx = new tussentijds_projectEntities())
+            using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
             {
                 cbLogin.ItemsSource = ctx.Personeelslids.Select(s => s).ToList();
                 cbLogin.SelectedIndex = 0;
@@ -35,7 +35,7 @@ namespace TussentijdsProject
         {
             Personeelslid geselecteerdPersoon = (cbLogin.SelectedItem as Personeelslid);
             string encrypted = Encrytion.Encrypt(geselecteerdPersoon.Voornaam, txtWachtwoord.Text);
-            using (tussentijds_projectEntities ctx = new tussentijds_projectEntities())
+            using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
             {
                 List<string> wachtwoordenInTable = null;
                 wachtwoordenInTable = ctx.Logins.Where(s => s.PersoneelslidID == geselecteerdPersoon.PersoneelslidID).Select(s => s.Wachtwoord).ToList();
