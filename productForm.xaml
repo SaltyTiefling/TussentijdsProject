@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TussentijdsProject"
         mc:Ignorable="d"
-        Title="productForm" Height="450" Width="393.033" Loaded="Window_Loaded">
-    <Grid Margin="50 10">
+        Title="productForm" Height="450" Width="400" Loaded="Window_Loaded">
+    <Grid Margin="50 10 20 10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="0.5*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -21,28 +22,32 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-
         </Grid.RowDefinitions>
-        <TextBlock Margin="0 0 20 0" HorizontalAlignment="Right">Id:</TextBlock>
-        <TextBlock Grid.Column="1" x:Name="lblId">0</TextBlock>
+        <TextBlock Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" >Id:</TextBlock>
+        <TextBlock Grid.Column="1" x:Name="lblId" VerticalAlignment="Center" >0</TextBlock>
 
-        <TextBlock Grid.Row="1" Margin="20 0" HorizontalAlignment="Right">Naam:</TextBlock>
-        <TextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="txtNaam" IsEnabled="False"/>
+        <TextBlock Grid.Row="1" Margin="20 0" HorizontalAlignment="Right" VerticalAlignment="Center" >Naam:</TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="center" x:Name="txtNaam" IsEnabled="False" TextChanged="txt_TextChanged"/>
+        <Image x:Name="epNaam" Grid.Column="2" Grid.Row="1" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
 
-        <TextBlock Grid.Row="2" Margin="0 0 20 0" HorizontalAlignment="Right"> Inkoopprijs:</TextBlock>
-        <TextBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="txtinpkoopprijs" IsEnabled="False"/>
+        <TextBlock Grid.Row="2" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" > Inkoopprijs:</TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="txtinpkoopprijs" IsEnabled="False" TextChanged="txt_TextChanged"/>
+        <Image x:Name="epInkoopprijs" Grid.Column="2" Grid.Row="2" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
 
-        <TextBlock Grid.Row="3" Margin="0 0 20 0" HorizontalAlignment="Right"> Marge:</TextBlock>
-        <TextBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="txtMarge" IsEnabled="False"/>
+        <TextBlock Grid.Row="3" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" > Marge:</TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="txtMarge" IsEnabled="False" TextChanged="txt_TextChanged"/>
+        <Image x:Name="epMarge" Grid.Column="2" Grid.Row="3" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
 
-        <TextBlock Grid.Row="4" Margin="0 0 20 0" HorizontalAlignment="Right"> Eenheid:</TextBlock>
-        <TextBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="txtEenheid" IsEnabled="False"/>
+        <TextBlock Grid.Row="4" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" > Eenheid:</TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="txtEenheid" IsEnabled="False" TextChanged="txt_TextChanged"/>
+        <Image x:Name="epEenheid" Grid.Column="2" Grid.Row="4" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
 
-        <TextBlock Grid.Row="5" Margin="0 0 20 0" HorizontalAlignment="Right"> Btw:</TextBlock>
-        <TextBox Grid.Column="1" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="txtBtw" IsEnabled="False"/>
+        <TextBlock Grid.Row="5" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" > Btw:</TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="txtBtw" IsEnabled="False" TextChanged="txt_TextChanged"/>
+        <Image x:Name="epBtw" Grid.Column="2" Grid.Row="5" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
 
-        <TextBlock Grid.Row="6" Margin="0 0 20 0" HorizontalAlignment="Right"> Leverancier:</TextBlock>
-        <ComboBox Grid.Column="1" Grid.Row="6" HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="cbLeverancier" IsEnabled="False">
+        <TextBlock Grid.Row="6" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" > Leverancier:</TextBlock>
+        <ComboBox Grid.Column="1" Grid.Row="6" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="cbLeverancier" IsEnabled="False">
             <ComboBox.ItemTemplate>
                 <ItemContainerTemplate>
                     <TextBlock Text="{Binding Contactpersoon}"></TextBlock>
@@ -50,8 +55,8 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <TextBlock Grid.Row="7" Margin="0 0 20 0" HorizontalAlignment="Right"> Categorie:</TextBlock>
-        <ComboBox Grid.Column="1" Grid.Row="7" HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="cbCategorie" IsEnabled="False">
+        <TextBlock Grid.Row="7" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" > Categorie:</TextBlock>
+        <ComboBox Grid.Column="1" Grid.Row="7" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="cbCategorie" IsEnabled="False">
             <ComboBox.ItemTemplate>
                 <ItemContainerTemplate>
                     <TextBlock Text="{Binding CategorieNaam}"></TextBlock>

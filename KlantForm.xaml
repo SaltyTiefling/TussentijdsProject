@@ -1,0 +1,69 @@
+﻿<Window x:Class="TussentijdsProject.KlantForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TussentijdsProject"
+        mc:Ignorable="d"
+        Title="KlantForm" Height="450" Width="400" Loaded="Window_Loaded">
+    <Grid Margin="50 10 20 10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="0.5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+        <TextBlock Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" >Id:</TextBlock>
+        <TextBlock Grid.Column="1" x:Name="lblId" VerticalAlignment="Center" >0</TextBlock>
+
+        <TextBlock Grid.Row="1" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" >Voornaam:</TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="center" x:Name="txtVoornaam" IsEnabled="False" TextChanged="textfield_TextChanged" />
+        <Image x:Name="epVoorNaam" Grid.Column="2" Grid.Row="1" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
+
+        <TextBlock Grid.Row="2" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" > Achternaam:</TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="txtAchternaam" IsEnabled="False" TextChanged="textfield_TextChanged" />
+        <Image x:Name="epAchternaam" Grid.Column="2" Grid.Row="2" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
+
+        <TextBlock Grid.Row="3" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" > Straat + nr:</TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Width="150" VerticalAlignment="Center" x:Name="txtStraat" IsEnabled="False" TextChanged="textfield_TextChanged" />
+        <TextBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" Width="25" VerticalAlignment="Center" x:Name="txtnr" IsEnabled="False" TextChanged="textfield_TextChanged" />
+        <Image x:Name="epStraat" Grid.Column="2" Grid.Row="3" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
+
+        <TextBlock Grid.Row="4" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" > Bus:</TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="txtBus" IsEnabled="False" TextChanged="textfield_TextChanged" />
+
+        <TextBlock Grid.Row="5" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" > Postcode:</TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="txtPostcode" IsEnabled="False" TextChanged="textfield_TextChanged"  />
+        <Image x:Name="epPostcode" Grid.Column="2" Grid.Row="5" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
+
+        <TextBlock Grid.Row="6" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" > Gemeente:</TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="6" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="txtGemeente" IsEnabled="False" TextChanged="textfield_TextChanged"  />
+        <Image x:Name="epGemeente" Grid.Column="2" Grid.Row="6" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
+        
+        <TextBlock Grid.Row="7" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" > Telefoon:</TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="7" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="txtTelephoon" IsEnabled="False" TextChanged="textfield_TextChanged"/>
+        <Image x:Name="epTelephoon" Grid.Column="2" Grid.Row="7" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
+
+        <TextBlock Grid.Row="8" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" > E-mail:</TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="8" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="txtMail" IsEnabled="False" TextChanged="textfield_TextChanged"/>
+        <Image x:Name="epMail" Grid.Column="2" Grid.Row="8" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
+
+        <TextBlock Grid.Row="9" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" > Opmerking:</TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="9" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="txtOpmerking" IsEnabled="False" TextChanged="textfield_TextChanged"/>
+
+        <Button Grid.Row="10" Grid.ColumnSpan="2" x:Name="Save" Content="Save" Click="Save_Click"/>
+    </Grid>
+</Window>

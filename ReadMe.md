@@ -32,7 +32,14 @@
 - bekijk knop producten aangemaakt
 - nieuwe product proberen toe te voegen
 
-### Dag 7 (Maandag 20/10)
+### Dag 7 (Dinsdag 20/10)
 
 - delete button aangemaakt
 - heb geprobeerd de producten te kunnen aanpassen maar het lukt niet voor een of andere reden dus ga hulp moeten vragen
+
+### Dag 8 (Woensdag 21/10)
+
+- selector gemaakt voor elke datagrid
+- aanpassen lukt nu
+- klantenformulier aangemaakt
+- input controle gezet op klanten en producten

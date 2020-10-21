@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ namespace TussentijdsProject
     {
         int productID;
         bool editable;
-        public productForm(Personeelslid user, int productID, bool editable = false)
+        public productForm(int productID, bool editable = false)
         {
             this.productID = productID;
 
@@ -32,20 +33,27 @@ namespace TussentijdsProject
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
+            if (InputCorrect().Count <= 0)
             {
-                var query = ctx.Products.Where(s => s.ProductID == productID).Select(s => s).FirstOrDefault();
-                query.Naam = txtNaam.Text;
-                query.Inkoopprijs = decimal.Parse(txtinpkoopprijs.Text);
-                query.Marge = decimal.Parse(txtMarge.Text);
-                query.Eenheid = decimal.Parse(txtEenheid.Text);
-                query.BTW = int.Parse(txtBtw.Text);
-                query.Categorie = (cbCategorie.SelectedItem as Categorie);
-                query.Leverancier = (cbLeverancier.SelectedItem as Leverancier);
-                ctx.SaveChanges();
+                using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
+                {
+                    var query = ctx.Products.Where(s => s.ProductID == productID).Select(s => s).FirstOrDefault();
+                    query.Naam = txtNaam.Text;
+                    query.Inkoopprijs = decimal.Parse(txtinpkoopprijs.Text);
+                    query.Marge = decimal.Parse(txtMarge.Text);
+                    query.Eenheid = decimal.Parse(txtEenheid.Text);
+                    query.BTW = int.Parse(txtBtw.Text);
+                    query.Categorie = (cbCategorie.SelectedItem as Categorie);
+                    query.Leverancier = (cbLeverancier.SelectedItem as Leverancier);
+                    ctx.SaveChanges();
+                }
+                this.DialogResult = true;
+                this.Close();
             }
-            this.Close();
-
+            else
+            {
+                MessageBox.Show(String.Join(Environment.NewLine, InputCorrect()));
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -54,34 +62,116 @@ namespace TussentijdsProject
             {
                 var product = ctx.Products.Where(s => s.ProductID == productID).Select(s => s).FirstOrDefault();
                 lblId.Text = product.ProductID.ToString();
+
                 txtNaam.Text = product.Naam;
                 txtinpkoopprijs.Text = product.Inkoopprijs.ToString();
                 txtMarge.Text = product.Marge.ToString();
                 txtEenheid.Text = product.Eenheid.ToString();
                 txtBtw.Text = product.BTW.ToString();
 
-                if (product.Leverancier != null)
+
+                cbLeverancier.ItemsSource = ctx.Leveranciers.Select(s => s).ToList();
+
+                try
                 {
-                    cbCategorie.Items.Add(ctx.Categories.Where(s => s.CategorieID == product.Categorie.CategorieID).Select(s => s).FirstOrDefault());
-                    cbLeverancier.Items.Add(ctx.Leveranciers.Where(s => s.LeverancierID == product.Leverancier.LeverancierID).Select(s => s).FirstOrDefault());
-                    cbLeverancier.SelectedIndex = 0;
-                    cbCategorie.SelectedIndex = 0;
+                    cbLeverancier.SelectedIndex = cbLeverancier.Items.IndexOf(product.Leverancier);
                 }
-                else
+                catch (Exception)
                 {
-                    cbLeverancier.ItemsSource = ctx.Leveranciers.Select(s => s).ToList();
-                    cbCategorie.ItemsSource = ctx.Categories.Select(s => s).ToList();
+                    cbLeverancier.SelectedIndex = 0;
+                    throw;
                 }
 
-                txtNaam.IsEnabled = editable;
-                txtinpkoopprijs.IsEnabled = editable;
-                txtMarge.IsEnabled = editable;
-                txtEenheid.IsEnabled = editable;
-                txtBtw.IsEnabled = editable;
-                cbCategorie.IsEnabled = editable;
+                cbCategorie.ItemsSource = ctx.Categories.Select(s => s).ToList();
+                try
+                {
+                    cbCategorie.SelectedIndex = cbCategorie.Items.IndexOf(product.Categorie);
+                }
+                catch (Exception)
+                {
+                    cbCategorie.SelectedIndex = 0;
+                    throw;
+                }
+
+
+                txtNaam.IsEnabled =
+                txtinpkoopprijs.IsEnabled =
+                txtMarge.IsEnabled =
+                txtEenheid.IsEnabled =
+                txtBtw.IsEnabled =
+                cbCategorie.IsEnabled =
                 cbLeverancier.IsEnabled = editable;
+            }
+            InputCorrect();
+        }
+
+
+        private List<string> InputCorrect()
+        {
+            List<string> answer = new List<string>();
+
+            if (txtNaam.Text.Length <= 0)
+            {
+                epNaam.Visibility = Visibility.Visible;
+                answer.Add("Geef een naam in voor het product");
+            }
+            else
+            {
+                epNaam.Visibility = Visibility.Hidden;
+            }
+
+            try
+            {
+                decimal.Parse(txtinpkoopprijs.Text);
+                epInkoopprijs.Visibility = Visibility.Hidden;
+            }
+            catch (Exception)
+            {
+                epInkoopprijs.Visibility = Visibility.Visible;
+                answer.Add("Geef een geldige inkoopprijs");
+            }
+            try
+            {
+                decimal.Parse(txtMarge.Text);
+                epMarge.Visibility = Visibility.Hidden;
 
             }
+            catch (Exception)
+            {
+                epMarge.Visibility = Visibility.Visible;
+                answer.Add("Geef een geldige Marge");
+            }
+
+            try
+            {
+                decimal.Parse(txtEenheid.Text);
+                epEenheid.Visibility = Visibility.Hidden;
+            }
+            catch (Exception)
+            {
+                epEenheid.Visibility = Visibility.Visible;
+                answer.Add("Geef een geldige Marge");
+            }
+
+            try
+            {
+                int.Parse(txtBtw.Text);
+                epBtw.Visibility = Visibility.Hidden;
+            }
+            catch (Exception)
+            {
+                epBtw.Visibility = Visibility.Visible;
+                answer.Add("Geef een geldige BTW");
+            }
+
+
+            return answer;
         }
+
+        private void txt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            InputCorrect();
+        }
+
     }
 }

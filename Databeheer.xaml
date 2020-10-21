@@ -15,7 +15,7 @@
             <RowDefinition Height="5*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TabControl x:Name="tabs">
+        <TabControl x:Name="tabs" SelectionChanged="tabs_SelectionChanged">
             <TabItem Header="Producten" >
                 <DataGrid SelectionMode="Single" IsReadOnly="True" SelectedValue="{Binding s}" x:Name="Productenlijst" AutoGenerateColumns="False" SelectedCellsChanged="Productenlijst_SelectedCellsChanged">
                     <DataGrid.Columns>
@@ -30,19 +30,8 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="Bestellingen" >
-                <DataGrid IsReadOnly="True" x:Name="Bestellingenlijst" AutoGenerateColumns="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Id" Binding="{Binding s.BestellingID}"/>
-                        <DataGridTextColumn Header="Datum" Width="*" Binding="{Binding s.DatumOpgemaakt, StringFormat=\{0:dd MMM yy HH:mm tt\}}"/>
-                        <DataGridTextColumn Header="Verkoper" Width="*" Binding="{Binding Verkoper}"/>
-                        <DataGridTextColumn Header="Leverancier" Width="*" Binding="{Binding Leverancier}"/>
-                        <DataGridTextColumn Header="Klant" Width="*" Binding="{Binding Klant}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </TabItem>
             <TabItem Header="Klanten" >
-                <DataGrid IsReadOnly="True" AutoGenerateColumns="False" x:Name="Klantenlijst">
+                <DataGrid IsReadOnly="True" AutoGenerateColumns="False" x:Name="Klantenlijst" SelectedCellsChanged="Klantenlijst_SelectedCellsChanged">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Id" Binding="{Binding s.KlantID}"/>
                         <DataGridTextColumn Header="Naam" Binding="{Binding Naam}"/>
@@ -55,7 +44,7 @@
                 </DataGrid>
             </TabItem>
             <TabItem Header="Categorien">
-                <DataGrid IsReadOnly="True" AutoGenerateColumns="false" x:Name="Categorienlijst">
+                <DataGrid IsReadOnly="True" AutoGenerateColumns="false" x:Name="Categorienlijst" SelectedCellsChanged="Categorienlijst_SelectedCellsChanged">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Id" Binding="{Binding CategorieID}"/>
                         <DataGridTextColumn Header="Naam" Width="*" Binding="{Binding CategorieNaam}"/>
@@ -63,7 +52,7 @@
                 </DataGrid>
             </TabItem>
             <TabItem Header="Leveranciers" >
-                <DataGrid IsReadOnly="True" AutoGenerateColumns="False" x:Name="Leverancierslijst">
+                <DataGrid IsReadOnly="True" AutoGenerateColumns="False" x:Name="Leverancierslijst" SelectedCellsChanged="Leverancierslijst_SelectedCellsChanged">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Id" Binding="{Binding s.LeverancierID}"/>
                         <DataGridTextColumn Header="Naam" Binding="{Binding s.Contactpersoon}"/>
@@ -74,7 +63,7 @@
                 </DataGrid>
             </TabItem>
             <TabItem Header="Personeel" >
-                <DataGrid IsReadOnly="True" AutoGenerateColumns="false" x:Name="Personeellijst">
+                <DataGrid IsReadOnly="True" AutoGenerateColumns="false" x:Name="Personeellijst" SelectedCellsChanged="Personeellijst_SelectedCellsChanged">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Id" Binding="{Binding persoon.PersoneelslidID}"/>
                         <DataGridTextColumn Header="Voornaam" Binding="{Binding persoon.Voornaam}"/>
@@ -83,12 +72,23 @@
                 </DataGrid>
             </TabItem>
             <TabItem Header="Rollen" >
-                <DataGrid IsReadOnly="True" AutoGenerateColumns="False" x:Name="Rollenlijst">
+                <DataGrid IsReadOnly="True" AutoGenerateColumns="False" x:Name="Rollenlijst" SelectedCellsChanged="Rollenlijst_SelectedCellsChanged">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="RolID" Binding="{Binding key.RolID}"/>
+                        <DataGridTextColumn Header="Id" Binding="{Binding key.RolID}"/>
                         <DataGridTextColumn Header="Rol" Binding="{Binding key.RolNaam}"/>
                         <DataGridTextColumn Header="Personeel" Width="*" Binding="{Binding s}"/>
 
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Bestellingen" >
+                <DataGrid IsReadOnly="True" x:Name="Bestellingenlijst" AutoGenerateColumns="False" SelectedCellsChanged="Bestellingenlijst_SelectedCellsChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id" Binding="{Binding s.BestellingID}"/>
+                        <DataGridTextColumn Header="Datum" Width="*" Binding="{Binding s.DatumOpgemaakt, StringFormat=\{0:dd MMM yy HH:mm tt\}}"/>
+                        <DataGridTextColumn Header="Verkoper" Width="*" Binding="{Binding Verkoper}"/>
+                        <DataGridTextColumn Header="Leverancier" Width="*" Binding="{Binding Leverancier}"/>
+                        <DataGridTextColumn Header="Klant" Width="*" Binding="{Binding Klant}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
@@ -110,6 +110,11 @@
                 <Button x:Name="btnDelete" Margin="10" Content="Delete" Click="btnDelete_Click" Background="#FFE84A4A" FontWeight="Bold" FontStyle="Italic" />
             </StackPanel>
         </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+            <TextBlock Margin=" 0 0 10 0"> selectedID :</TextBlock>
+            <TextBlock x:Name="lblSelectedID">0</TextBlock>
+        </StackPanel>
+
     </Grid>
 </Window>
  

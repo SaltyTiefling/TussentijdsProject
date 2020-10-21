@@ -23,7 +23,7 @@ namespace TussentijdsProject
     public partial class Databeheer : Window
     {
         public Personeelslid currentUser { get; } = new Personeelslid();
-        int selectedID = 1;
+        int selectedID = 0;
         public Databeheer(Personeelslid user)
         {
             currentUser = user;
@@ -45,7 +45,6 @@ namespace TussentijdsProject
                     Leverancier = s.Leverancier.Contactpersoon,
                     Categorie = s.Categorie.CategorieNaam
                 }).ToList();
-                Productenlijst.SelectedIndex = 0;
 
                 Bestellingenlijst.ItemsSource = ctx.Bestellings.Select(s => new
                 {
@@ -122,87 +121,240 @@ namespace TussentijdsProject
         {
             using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
             {
+
+                    switch ((tabs.SelectedValue as TabItem).Header.ToString())
+                    {
+                        case "Producten":
+                            Product product = new Product();
+                            ctx.Products.Add(product);
+                            ctx.SaveChanges();
+                            productForm pf = new productForm(product.ProductID, true);
+                            if (pf.ShowDialog() != true)
+                            {
+                                ctx.Products.Remove(product);
+                                ctx.SaveChanges();
+                            }
+                            break;
+                        case "Klanten":
+                            Klant klant = new Klant();
+                            klant.AangemaaktOp = DateTime.Now;
+                            ctx.Klants.Add(klant);
+                            ctx.SaveChanges();
+                            KlantForm kf = new KlantForm(klant.KlantID, true);
+                            if (kf.ShowDialog() != true)
+                            {
+                                ctx.Klants.Remove(klant);
+                                ctx.SaveChanges();
+                            }
+                            break;
+                        default:
+                            MessageBox.Show("er is iets mis gegaanselecteer een andere databank aub");
+                            break;
+                    }
+               
+                LaadLijsten();
+            }
+        }
+        private void Bekijk_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedID > 0)
+            {
                 switch (((tabs.SelectedValue as TabItem).Header.ToString()))
                 {
                     case "Producten":
-                        Product product = new Product();
-                        ctx.Products.Add(product);
-                        ctx.SaveChanges();
-                        productForm pf = new productForm(currentUser, product.ProductID, true);
+                        productForm pf = new productForm(selectedID);
                         pf.ShowDialog();
+                        break;
+                    case "Klanten":
+                        KlantForm kf = new KlantForm(selectedID);
+                        kf.ShowDialog();
                         break;
                     default:
                         MessageBox.Show("er is iets mis gegaanselecteer een andere databank aub");
                         break;
                 }
             }
-            LaadLijsten();
-        }
-        private void Bekijk_Click(object sender, RoutedEventArgs e)
-        {
-            switch (((tabs.SelectedValue as TabItem).Header.ToString()))
+            else
             {
-                case "Producten":
-                    productForm pf = new productForm(currentUser, selectedID);
-                    pf.ShowDialog();
-                    break;
-                default:
-                    MessageBox.Show("er is iets mis gegaanselecteer een andere databank aub");
-                    break;
+                MessageBox.Show($"selecteer eerst een rij uit {(tabs.SelectedValue as TabItem).Header}");
             }
-
             LaadLijsten();
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
-
-            switch (((tabs.SelectedValue as TabItem).Header.ToString()))
+            if (selectedID > 0)
             {
-                case "Producten":
-                    productForm pf = new productForm(currentUser, selectedID, true);
-                    pf.ShowDialog();
-                    break;
-                default:
-                    MessageBox.Show("er is iets mis gegaanselecteer een andere databank aub");
-                    break;
-
+                switch (((tabs.SelectedValue as TabItem).Header.ToString()))
+                {
+                    case "Producten":
+                        productForm pf = new productForm(selectedID, true);
+                        pf.ShowDialog();
+                        break;
+                    case "Klanten":
+                        KlantForm kf = new KlantForm(selectedID, true);
+                        kf.ShowDialog();
+                        break;
+                    default:
+                        MessageBox.Show("er is iets mis gegaanselecteer een andere databank aub");
+                        break;
+                }
+            }
+            else
+            {
+                MessageBox.Show($"selecteer eerst een rij uit {(tabs.SelectedValue as TabItem).Header}");
             }
             LaadLijsten();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
+            if (selectedID > 0)
             {
-                switch (((tabs.SelectedValue as TabItem).Header.ToString()))
+                using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
                 {
-                    case "Producten":
-                        Product product = (ctx.Products.Select(s => s).ToList()[Productenlijst.SelectedIndex] as Product);
-                        ctx.Products.Remove(product);
-                        ctx.SaveChanges();
-                        break;
-                    default:
-                        MessageBox.Show("er is iets mis gegaanselecteer een andere databank aub");
-                        break;
+                    switch (((tabs.SelectedValue as TabItem).Header.ToString()))
+                    {
+                        case "Producten":
+                            Product product = ctx.Products.Select(s => s).Where(s => s.ProductID == selectedID).FirstOrDefault();
+                            ctx.Products.Remove(product);
+                            ctx.SaveChanges();
+                            break;
+                        case "Klanten":
+                            Klant klant = ctx.Klants.Select(s => s).Where(s => s.KlantID == selectedID).FirstOrDefault();
+                            ctx.Klants.Remove(klant);
+                            ctx.SaveChanges();
+                            break;
+                        default:
+                            MessageBox.Show("er is iets mis gegaanselecteer een andere databank aub");
+                            break;
+                    }
+
                 }
             }
+            else
+            {
+                MessageBox.Show($"selecteer eerst een rij uit {(tabs.SelectedValue as TabItem).Header}");
+            }
             LaadLijsten();
+        }
+
+        private void tabs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedID = 0;
+            lblSelectedID.Text = selectedID.ToString();
+
         }
 
         private void Productenlijst_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
             {
-                if (Productenlijst.SelectedIndex >= 0)
+                try
                 {
-                    selectedID = (ctx.Products.Select(s => s).ToList()[Productenlijst.SelectedIndex] as Product).ProductID;
-                    btnDelete.IsEnabled = true;
+                    selectedID = (ctx.Products.ToList()[Productenlijst.SelectedIndex] as Product).ProductID;
                 }
-                else {
-                    btnDelete.IsEnabled = true;
+                catch (Exception)
+                {
+                    selectedID = 0;
                 }
+                lblSelectedID.Text = selectedID.ToString();
+            }
+        }
 
+        private void Klantenlijst_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
+            {
+                try
+                {
+                    selectedID = (ctx.Klants.ToList()[Klantenlijst.SelectedIndex] as Klant).KlantID;
+                }
+                catch (Exception)
+                {
+                    selectedID = 0;
+                }
+                lblSelectedID.Text = selectedID.ToString();
+            }
+        }
+
+        private void Categorienlijst_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
+            {
+                try
+                {
+                    selectedID = (ctx.Categories.ToList()[Categorienlijst.SelectedIndex] as Categorie).CategorieID;
+                }
+                catch (Exception)
+                {
+                    selectedID = 0;
+                }
+                lblSelectedID.Text = selectedID.ToString();
+            }
+        }
+
+        private void Leverancierslijst_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
+            {
+                try
+                {
+                    selectedID = (ctx.Leveranciers.ToList()[Leverancierslijst.SelectedIndex] as Leverancier).LeverancierID;
+                }
+                catch (Exception)
+                {
+                    selectedID = 0;
+                }
+                lblSelectedID.Text = selectedID.ToString();
+            }
+        }
+
+        private void Personeellijst_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
+            {
+                try
+                {
+                    selectedID = (ctx.Personeelslids.ToList()[Personeellijst.SelectedIndex] as Personeelslid).PersoneelslidID;
+                }
+                catch (Exception)
+                {
+                    selectedID = 0;
+                }
+                lblSelectedID.Text = selectedID.ToString();
+            }
+        }
+
+        private void Rollenlijst_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
+            {
+                try
+                {
+                  selectedID = (ctx.Rols.ToList()[Rollenlijst.SelectedIndex] as Rol).RolID;
+                }
+                catch (Exception)
+                {
+                    selectedID = 0;
+                }
+                lblSelectedID.Text = selectedID.ToString();
+            }
+        }
+
+        private void Bestellingenlijst_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
+            {
+                try
+                {
+                    selectedID = (ctx.Bestellings.ToList()[Bestellingenlijst.SelectedIndex] as Bestelling).BestellingID;
+                }
+                catch (Exception)
+                {
+                    selectedID = 0;
+                }
+                lblSelectedID.Text = selectedID.ToString();
             }
         }
     }
