@@ -43,3 +43,10 @@
 - aanpassen lukt nu
 - klantenformulier aangemaakt
 - input controle gezet op klanten en producten
+
+### Dag 9 (Donderdag 22/10)
+
+- heb categorieën afgewerkt en gekoppeld
+- note: kijk naar GroupStyle
+
+(ben daarna moeten stoppen wegens stekende hoofdpijn waarna ik bijna heel de dag heb liggen slapen)

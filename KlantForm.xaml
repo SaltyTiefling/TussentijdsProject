@@ -8,9 +8,9 @@
         Title="KlantForm" Height="450" Width="400" Loaded="Window_Loaded">
     <Grid Margin="50 10 20 10">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="184"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -52,7 +52,7 @@
         <TextBlock Grid.Row="6" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" > Gemeente:</TextBlock>
         <TextBox Grid.Column="1" Grid.Row="6" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="txtGemeente" IsEnabled="False" TextChanged="textfield_TextChanged"  />
         <Image x:Name="epGemeente" Grid.Column="2" Grid.Row="6" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
-        
+
         <TextBlock Grid.Row="7" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" > Telefoon:</TextBlock>
         <TextBox Grid.Column="1" Grid.Row="7" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="txtTelephoon" IsEnabled="False" TextChanged="textfield_TextChanged"/>
         <Image x:Name="epTelephoon" Grid.Column="2" Grid.Row="7" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />

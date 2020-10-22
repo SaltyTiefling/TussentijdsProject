@@ -75,6 +75,9 @@
     <Compile Include="Categorie.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="CategorienForm.xaml.cs">
+      <DependentUpon>CategorienForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Databeheer.xaml.cs">
       <DependentUpon>Databeheer.xaml</DependentUpon>
     </Compile>
@@ -130,6 +133,10 @@
     <Compile Include="sysdiagram.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Page Include="CategorienForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Databeheer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

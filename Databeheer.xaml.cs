@@ -122,81 +122,81 @@ namespace TussentijdsProject
             using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
             {
 
-                    switch ((tabs.SelectedValue as TabItem).Header.ToString())
-                    {
-                        case "Producten":
-                            Product product = new Product();
-                            ctx.Products.Add(product);
+                switch ((tabs.SelectedValue as TabItem).Header.ToString())
+                {
+                    case "Producten":
+                        Product product = new Product();
+                        ctx.Products.Add(product);
+                        ctx.SaveChanges();
+                        productForm pf = new productForm(product.ProductID, true);
+                        if (pf.ShowDialog() != true)
+                        {
+                            ctx.Products.Remove(product);
                             ctx.SaveChanges();
-                            productForm pf = new productForm(product.ProductID, true);
-                            if (pf.ShowDialog() != true)
-                            {
-                                ctx.Products.Remove(product);
-                                ctx.SaveChanges();
-                            }
-                            break;
-                        case "Klanten":
-                            Klant klant = new Klant();
-                            klant.AangemaaktOp = DateTime.Now;
-                            ctx.Klants.Add(klant);
+                        }
+                        break;
+                    case "Klanten":
+                        Klant klant = new Klant();
+                        klant.AangemaaktOp = DateTime.Now;
+                        ctx.Klants.Add(klant);
+                        ctx.SaveChanges();
+                        KlantForm kf = new KlantForm(klant.KlantID, true);
+                        if (kf.ShowDialog() != true)
+                        {
+                            ctx.Klants.Remove(klant);
                             ctx.SaveChanges();
-                            KlantForm kf = new KlantForm(klant.KlantID, true);
-                            if (kf.ShowDialog() != true)
-                            {
-                                ctx.Klants.Remove(klant);
-                                ctx.SaveChanges();
-                            }
-                            break;
-                        default:
-                            MessageBox.Show("er is iets mis gegaanselecteer een andere databank aub");
-                            break;
-                    }
-               
+                        }
+                        break;
+                    case "Categorien":
+                        Categorie categorie = new Categorie();
+                        ctx.Categories.Add(categorie);
+                        ctx.SaveChanges();
+                        CategorienForm cf = new CategorienForm(categorie.CategorieID, true);
+                        if (cf.ShowDialog() != true)
+                        {
+                            ctx.Categories.Remove(categorie);
+                            ctx.SaveChanges();
+                        }
+                        break;
+
+                    default:
+                        MessageBox.Show("er is iets mis gegaanselecteer een andere databank aub");
+                        break;
+                }
+
                 LaadLijsten();
             }
         }
         private void Bekijk_Click(object sender, RoutedEventArgs e)
         {
-            if (selectedID > 0)
-            {
-                switch (((tabs.SelectedValue as TabItem).Header.ToString()))
-                {
-                    case "Producten":
-                        productForm pf = new productForm(selectedID);
-                        pf.ShowDialog();
-                        break;
-                    case "Klanten":
-                        KlantForm kf = new KlantForm(selectedID);
-                        kf.ShowDialog();
-                        break;
-                    default:
-                        MessageBox.Show("er is iets mis gegaanselecteer een andere databank aub");
-                        break;
-                }
-            }
-            else
-            {
-                MessageBox.Show($"selecteer eerst een rij uit {(tabs.SelectedValue as TabItem).Header}");
-            }
-            LaadLijsten();
+            OpenForm(false);
+
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            OpenForm(true);
+        }
+        private void OpenForm(bool editable)
         {
             if (selectedID > 0)
             {
                 switch (((tabs.SelectedValue as TabItem).Header.ToString()))
                 {
                     case "Producten":
-                        productForm pf = new productForm(selectedID, true);
+                        productForm pf = new productForm(selectedID, editable);
                         pf.ShowDialog();
                         break;
                     case "Klanten":
-                        KlantForm kf = new KlantForm(selectedID, true);
+                        KlantForm kf = new KlantForm(selectedID, editable);
                         kf.ShowDialog();
                         break;
+                    case "Categorien":
+                        CategorienForm cf = new CategorienForm(selectedID, editable);
+                        cf.ShowDialog();
+                        break;
                     default:
-                        MessageBox.Show("er is iets mis gegaanselecteer een andere databank aub");
+                        MessageBox.Show("er is iets mis gegaan selecteer een andere databank aub");
                         break;
                 }
             }
@@ -206,7 +206,6 @@ namespace TussentijdsProject
             }
             LaadLijsten();
         }
-
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (selectedID > 0)
@@ -223,6 +222,15 @@ namespace TussentijdsProject
                         case "Klanten":
                             Klant klant = ctx.Klants.Select(s => s).Where(s => s.KlantID == selectedID).FirstOrDefault();
                             ctx.Klants.Remove(klant);
+                            ctx.SaveChanges();
+                            break;
+                        case "Categorien":
+                            Categorie categorie = ctx.Categories.Where(s => s.CategorieID == selectedID).FirstOrDefault();
+                            foreach (Product product1 in categorie.Products)
+                            {
+                                product1.Categorie = null;
+                            }
+                            ctx.Categories.Remove(categorie);
                             ctx.SaveChanges();
                             break;
                         default:
@@ -332,7 +340,7 @@ namespace TussentijdsProject
             {
                 try
                 {
-                  selectedID = (ctx.Rols.ToList()[Rollenlijst.SelectedIndex] as Rol).RolID;
+                    selectedID = (ctx.Rols.ToList()[Rollenlijst.SelectedIndex] as Rol).RolID;
                 }
                 catch (Exception)
                 {

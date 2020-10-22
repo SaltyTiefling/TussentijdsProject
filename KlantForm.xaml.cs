@@ -25,7 +25,6 @@ namespace TussentijdsProject
         public KlantForm(int klantID, bool editable = false)
         {
             this.klantID = klantID;
-
             this.editable = editable;
             InitializeComponent();
         }
