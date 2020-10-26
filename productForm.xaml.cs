@@ -43,8 +43,8 @@ namespace TussentijdsProject
                     query.Marge = decimal.Parse(txtMarge.Text);
                     query.Eenheid = decimal.Parse(txtEenheid.Text);
                     query.BTW = int.Parse(txtBtw.Text);
-                    query.Categorie = (cbCategorie.SelectedItem as Categorie);
-                    query.Leverancier = (cbLeverancier.SelectedItem as Leverancier);
+                    query.CategorieID = (cbCategorie.SelectedItem as Categorie).CategorieID;
+                    query.LeverancierID = (cbLeverancier.SelectedItem as Leverancier).LeverancierID;
                     ctx.SaveChanges();
                 }
                 this.DialogResult = true;

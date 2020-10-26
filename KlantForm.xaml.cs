@@ -40,7 +40,7 @@ namespace TussentijdsProject
                     query.Achternaam = txtAchternaam.Text;
                     query.Straatnaam = txtStraat.Text;
                     query.Huisnummer = txtnr.Text;
-                    try { query.Bus = txtnr.Text; } catch (Exception) { }
+                    try { query.Bus = txtnr.Text; } catch (Exception) {query.Bus = null; }
                     query.Postcode = int.Parse(txtnr.Text);
                     query.Gemeente = txtGemeente.Text;
                     query.Telefoonnummer = txtTelephoon.Text;
@@ -165,6 +165,7 @@ namespace TussentijdsProject
             using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
             {
                 Klant klant = ctx.Klants.Where(s => s.KlantID == klantID).FirstOrDefault();
+                lblId.Text = klant.KlantID.ToString();
                 txtVoornaam.Text = klant.Voornaam;
                 txtAchternaam.Text = klant.Achternaam;
                 txtStraat.Text = klant.Straatnaam;

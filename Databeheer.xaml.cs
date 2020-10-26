@@ -65,7 +65,7 @@ namespace TussentijdsProject
                 Leverancierslijst.ItemsSource = ctx.Leveranciers.Select(s => new
                 {
                     s,
-                    Adress = s.Straatnaam + " " + s.Huisnummer + s.Bus + ", " + s.Postcode + " " + s.Gemeente,
+                    Adress = s.Straatnaam + " " + s.Huisnummer + " " + s.Bus + ", " + s.Postcode + " " + s.Gemeente,
                 }).ToList();
 
                 Personeellijst.ItemsSource = ctx.PersoneelslidRols.GroupBy(s => s.PersoneelslidID).Select(pr => new
@@ -74,11 +74,6 @@ namespace TussentijdsProject
                     Rollen = pr.ToList()
                 }).ToList();
 
-                Rollenlijst.ItemsSource = ctx.PersoneelslidRols.GroupBy(s => s.Rol).Select(s => new
-                {
-                    key = s.Key,
-                    s = s.ToList()
-                }).ToList();
             }
         }
         private string ListToString(List<string> list)
@@ -101,17 +96,25 @@ namespace TussentijdsProject
 
                 if (userRolls.Contains("Administrator"))
                 {
+                    btnBekijk.IsEnabled = 
+                    btnDelete.IsEnabled =
+                    btnNieuw.IsEnabled =
+                    btnEdit.IsEnabled = true;
+
                     Console.WriteLine("je bent een admin");
                 }
 
                 if (userRolls.Contains("Magazijnier"))
                 {
                     Console.WriteLine("je bent een Magazijnier");
+                    btnBekijk.IsEnabled = true;
+
                 }
 
                 if (userRolls.Contains("Verkoper"))
                 {
                     Console.WriteLine("je bent een Verkoper");
+                    btnBekijk.IsEnabled = true;
                 }
 
             }
@@ -158,9 +161,30 @@ namespace TussentijdsProject
                             ctx.SaveChanges();
                         }
                         break;
-
+                    case "Leveranciers":
+                        Leverancier leverancier = new Leverancier();
+                        ctx.Leveranciers.Add(leverancier);
+                        ctx.SaveChanges();
+                        LeverancierForm lf = new LeverancierForm(selectedID, true);
+                        if (lf.ShowDialog() != true)
+                        {
+                            ctx.Leveranciers.Remove(leverancier);
+                            ctx.SaveChanges();
+                        }
+                        break;
+                    case "Personeel":
+                        Personeelslid personeelslid = new Personeelslid();
+                        ctx.Personeelslids.Add(personeelslid);
+                        ctx.SaveChanges();
+                        PersoneelsForm pef = new PersoneelsForm(selectedID, true);
+                        if (pef.ShowDialog() != true)
+                        {
+                            ctx.Personeelslids.Remove(personeelslid);
+                            ctx.SaveChanges();
+                        }
+                        break;
                     default:
-                        MessageBox.Show("er is iets mis gegaanselecteer een andere databank aub");
+                        MessageBox.Show("er is iets mis gegaan selecteer een andere databank aub");
                         break;
                 }
 
@@ -195,6 +219,14 @@ namespace TussentijdsProject
                         CategorienForm cf = new CategorienForm(selectedID, editable);
                         cf.ShowDialog();
                         break;
+                    case "Leveranciers":
+                        LeverancierForm lf = new LeverancierForm(selectedID, editable);
+                        lf.ShowDialog();
+                        break;
+                    case "Personeel":
+                        PersoneelsForm pef = new PersoneelsForm(selectedID, editable);
+                        pef.ShowDialog();
+                        break;
                     default:
                         MessageBox.Show("er is iets mis gegaan selecteer een andere databank aub");
                         break;
@@ -217,27 +249,67 @@ namespace TussentijdsProject
                         case "Producten":
                             Product product = ctx.Products.Select(s => s).Where(s => s.ProductID == selectedID).FirstOrDefault();
                             ctx.Products.Remove(product);
-                            ctx.SaveChanges();
                             break;
                         case "Klanten":
                             Klant klant = ctx.Klants.Select(s => s).Where(s => s.KlantID == selectedID).FirstOrDefault();
+
+                            foreach (Bestelling item in klant.Bestellings)
+                            {
+                                item.KlantID = null;
+                            }
+
                             ctx.Klants.Remove(klant);
-                            ctx.SaveChanges();
                             break;
                         case "Categorien":
                             Categorie categorie = ctx.Categories.Where(s => s.CategorieID == selectedID).FirstOrDefault();
                             foreach (Product product1 in categorie.Products)
                             {
-                                product1.Categorie = null;
+                                product1.CategorieID = null;
                             }
                             ctx.Categories.Remove(categorie);
-                            ctx.SaveChanges();
+                            break;
+                        case "Leveranciers":
+                            Leverancier leverancier = ctx.Leveranciers.Where(s => s.LeverancierID == selectedID).FirstOrDefault();
+
+                            foreach (Product product1 in leverancier.Products)
+                            {
+                                product1.LeverancierID = null;
+                            }
+
+                            foreach (Bestelling item in leverancier.Bestellings)
+                            {
+                                item.LeverancierID = null;
+                            }
+
+                            ctx.Leveranciers.Remove(leverancier);
+                            break;
+                        case "Personeel":
+                            Personeelslid personeelslid = ctx.Personeelslids.Where(s => s.PersoneelslidID == selectedID).FirstOrDefault();
+
+                            if (personeelslid == currentUser)
+                            {
+                                MessageBox.Show("je kan jezelf niet verwijderen");
+                            }
+                            else
+                            {
+                                foreach (Bestelling item in personeelslid.Bestellings)
+                                {
+                                    item.PersoneelslidID = null;
+                                }
+
+                                ctx.Logins.RemoveRange(personeelslid.Logins);
+                                ctx.PersoneelslidRols.RemoveRange(personeelslid.PersoneelslidRols);
+                                ctx.Personeelslids.Remove(personeelslid);
+                                this.Close();
+                            }
+
                             break;
                         default:
-                            MessageBox.Show("er is iets mis gegaanselecteer een andere databank aub");
+                            MessageBox.Show("er is iets mis gegaan selecteer een andere databank aub");
                             break;
-                    }
 
+                    }
+                    ctx.SaveChanges();
                 }
             }
             else
@@ -325,22 +397,6 @@ namespace TussentijdsProject
                 try
                 {
                     selectedID = (ctx.Personeelslids.ToList()[Personeellijst.SelectedIndex] as Personeelslid).PersoneelslidID;
-                }
-                catch (Exception)
-                {
-                    selectedID = 0;
-                }
-                lblSelectedID.Text = selectedID.ToString();
-            }
-        }
-
-        private void Rollenlijst_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
-        {
-            using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
-            {
-                try
-                {
-                    selectedID = (ctx.Rols.ToList()[Rollenlijst.SelectedIndex] as Rol).RolID;
                 }
                 catch (Exception)
                 {

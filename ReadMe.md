@@ -47,6 +47,15 @@
 ### Dag 9 (Donderdag 22/10)
 
 - heb categorieën afgewerkt en gekoppeld
-- note: kijk naar GroupStyle
 
 (ben daarna moeten stoppen wegens stekende hoofdpijn waarna ik bijna heel de dag heb liggen slapen)
+
+### Dag 10 (Vrijdag 23/10)
+
+- Leveranciers afgewerkt
+- heb geprobeerd om een '(Collection)' te tonen in een datagrid maar heb niets gevonden 
+
+### Dag 11 (Maandag 26/10)
+- heb personeelform afgemaakt
+- heb geprobeerd om de rollen van de persoon aan te passen
+- buttons enabled naar gelang de rol
