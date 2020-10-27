@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
@@ -14,6 +15,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Newtonsoft.Json;
+using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace TussentijdsProject
 {
@@ -94,29 +98,70 @@ namespace TussentijdsProject
                 System.Linq.IQueryable<string> userRolls = ctx.PersoneelslidRols.Where(s => s.PersoneelslidID == currentUser.PersoneelslidID).Select(s => s.Rol.RolNaam);
                 Debug.WriteLine("rollen");
 
-                if (userRolls.Contains("Administrator"))
-                {
-                    btnBekijk.IsEnabled = 
-                    btnDelete.IsEnabled =
-                    btnNieuw.IsEnabled =
-                    btnEdit.IsEnabled = true;
-
-                    Console.WriteLine("je bent een admin");
-                }
+                btnBekijk.IsEnabled = true;
 
                 if (userRolls.Contains("Magazijnier"))
                 {
                     Console.WriteLine("je bent een Magazijnier");
-                    btnBekijk.IsEnabled = true;
+
+                    switch ((tabs.SelectedValue as TabItem).Header.ToString())
+                    {
+                        case "Bestellingen":
+                        case "Klanten":
+                            btnDelete.IsEnabled =
+                            btnNieuw.IsEnabled =
+                            btnEdit.IsEnabled =
+                            btnFileEdit.IsEnabled = false;
+                            break;
+                        case "Producten":
+                            btnFileEdit.Visibility = Visibility.Visible;
+                            break;
+                        default:
+                            btnDelete.IsEnabled =
+                            btnNieuw.IsEnabled =
+                            btnEdit.IsEnabled =
+                            btnFileEdit.IsEnabled = true;
+                            btnFileEdit.Visibility = Visibility.Hidden;
+                            break;
+                    }
 
                 }
 
                 if (userRolls.Contains("Verkoper"))
                 {
                     Console.WriteLine("je bent een Verkoper");
-                    btnBekijk.IsEnabled = true;
+
+                    switch ((tabs.SelectedValue as TabItem).Header.ToString())
+                    {
+                        case "Klanten":
+                            btnDelete.IsEnabled =
+                            btnNieuw.IsEnabled =
+                            btnEdit.IsEnabled = true;
+                            break;
+                        default:
+                            btnDelete.IsEnabled =
+                            btnNieuw.IsEnabled =
+                            btnEdit.IsEnabled = false;
+                            break;
+                    }
                 }
 
+                if (userRolls.Contains("Administrator"))
+                {
+                    Console.WriteLine("je bent een admin");
+                    if ((tabs.SelectedValue as TabItem).Header.ToString() == "Producten")
+                    {
+                        btnFileEdit.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        btnFileEdit.Visibility = Visibility.Hidden;
+                    }
+                    btnDelete.IsEnabled =
+                    btnNieuw.IsEnabled =
+                    btnEdit.IsEnabled = true;
+
+                }
             }
         }
 
@@ -324,6 +369,8 @@ namespace TussentijdsProject
             selectedID = 0;
             lblSelectedID.Text = selectedID.ToString();
 
+            Window_Loaded(sender, e);
+
         }
 
         private void Productenlijst_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
@@ -420,6 +467,29 @@ namespace TussentijdsProject
                 }
                 lblSelectedID.Text = selectedID.ToString();
             }
+        }
+
+        private void btnFileEdit_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFile = new OpenFileDialog();
+            openFile.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
+            openFile.ShowDialog();
+
+            using (StreamReader file = File.OpenText(openFile.FileName))
+            using (JsonTextReader reader = new JsonTextReader(file))
+            {
+                try
+                {
+                    JObject JOProduct = (JObject)JToken.ReadFrom(reader);
+                    
+
+                }
+                catch(Exception exeption)
+                {
+                    MessageBox.Show(exeption.Message);    
+                }
+            }
+ 
         }
     }
 }

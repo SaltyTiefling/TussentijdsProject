@@ -59,3 +59,7 @@
 - heb personeelform afgemaakt
 - heb geprobeerd om de rollen van de persoon aan te passen
 - buttons enabled naar gelang de rol
+
+### Dag 12 (Disdag 27/10)
+- toegelaten bewerkingen afgewerkt per rol 
+- begonnen met produtenaanpassing via file(json)

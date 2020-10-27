@@ -101,7 +101,9 @@
                 <Button IsEnabled="False" x:Name="btnDelete" Margin="10" Content="Delete" Click="btnDelete_Click" Background="#FFE84A4A" FontWeight="Bold" FontStyle="Italic" />
             </StackPanel>
         </StackPanel>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+
+        <Button x:Name="btnFileEdit" Content="Edit by file" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Visibility="Hidden" Click="btnFileEdit_Click"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" >
             <TextBlock Margin=" 0 0 10 0"> selectedID :</TextBlock>
             <TextBlock x:Name="lblSelectedID">0</TextBlock>
         </StackPanel>
