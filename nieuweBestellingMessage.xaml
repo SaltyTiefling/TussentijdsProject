@@ -1,0 +1,46 @@
+﻿<Window x:Class="TussentijdsProject.nieuweBestellingMessage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TussentijdsProject"
+        mc:Ignorable="d"
+        Title="nieuweBestellingMessage" Height="200" Width="500">
+    <Grid Loaded="Grid_Loaded" >
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" MinWidth="150" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+            <TextBlock Text="Voor wie wil je een bestelling maken:" Margin="0 0 10 0"/>
+            <ComboBox Grid.Column="1" MinWidth="150"  x:Name="cbWie" SelectionChanged="cbWie_SelectionChanged"/>
+
+            <TextBlock Grid.Row="2"  x:Name="txtLeverancier" Text="kies de leverancier:"/>
+            <TextBlock Grid.Row="2"  x:Name="txtKlant" Text="Kies een Klant:" Visibility="Collapsed"/>
+            <ComboBox Grid.Row="2" x:Name="cbSchuldenaar" Grid.Column="1">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Contactpersoon}"></TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <ComboBox Grid.Row="2" x:Name="cbKlanten" Grid.Column="1" Visibility="Collapsed">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Voornaam}"></TextBlock>
+                            <TextBlock Text="{Binding Achternaam}" Margin="5 0 0 0"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button x:Name="btnOke" Grid.Row="3" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Padding="20 5" Content="Oke" Click="btnOke_Click" />
+        </Grid>
+    </Grid>
+</Window>

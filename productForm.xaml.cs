@@ -26,7 +26,6 @@ namespace TussentijdsProject
         public productForm(int productID, bool editable = false)
         {
             this.productID = productID;
-
             this.editable = editable;
             InitializeComponent();
         }

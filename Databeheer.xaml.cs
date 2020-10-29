@@ -18,6 +18,8 @@ using System.Windows.Shapes;
 using Newtonsoft.Json;
 using System.IO;
 using Newtonsoft.Json.Linq;
+using System.Runtime.InteropServices.ComTypes;
+using Microsoft.Graph;
 
 namespace TussentijdsProject
 {
@@ -228,6 +230,10 @@ namespace TussentijdsProject
                             ctx.SaveChanges();
                         }
                         break;
+                    case "Bestellingen":
+                        nieuweBestellingMessage nbm = new nieuweBestellingMessage(currentUser);
+                        nbm.ShowDialog();
+                        break;
                     default:
                         MessageBox.Show("er is iets mis gegaan selecteer een andere databank aub");
                         break;
@@ -271,6 +277,25 @@ namespace TussentijdsProject
                     case "Personeel":
                         PersoneelsForm pef = new PersoneelsForm(selectedID, editable);
                         pef.ShowDialog();
+                        break;
+                    case "Bestellingen":
+                        bool isleverancier = false;
+                        using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
+                        {
+                            Bestelling querry = ctx.Bestellings.Where(s => s.BestellingID == selectedID).FirstOrDefault();
+
+                            if (querry.Leverancier == null)
+                            {
+                                isleverancier = false;
+                            }
+                            else
+                            {
+                                isleverancier = true;
+                            }
+                        }
+
+                        BestelForm bf = new BestelForm(selectedID, isleverancier, editable);
+                        bf.ShowDialog();
                         break;
                     default:
                         MessageBox.Show("er is iets mis gegaan selecteer een andere databank aub");
@@ -348,6 +373,11 @@ namespace TussentijdsProject
                                 this.Close();
                             }
 
+                            break;
+                        case "Bestellingen":
+                            Bestelling bestelling = ctx.Bestellings.Where(s => s.BestellingID == selectedID).FirstOrDefault();
+                            ctx.BestellingProducts.RemoveRange(bestelling.BestellingProducts);
+                            ctx.Bestellings.Remove(bestelling);
                             break;
                         default:
                             MessageBox.Show("er is iets mis gegaan selecteer een andere databank aub");
@@ -477,7 +507,7 @@ namespace TussentijdsProject
 
             try
             {
-                using (StreamReader file = File.OpenText(openFile.FileName))
+                using (StreamReader file = System.IO.File.OpenText(openFile.FileName))
                 using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
                 using (JsonTextReader reader = new JsonTextReader(file))
                 {

@@ -67,3 +67,8 @@
 ### Dag 13 (Woensdag 28/10)
 - productenlijstaanpassen met json afgewerkt
 - errorhandeler aangepast met tooltips
+### Dag 14 (Donderdag 29/10) [Finale]
+- Bestelingsform afgewerkt
+- Bestelform naar Word is gedaan
+- NieuwebestellingForm klaargemaakt
+- bestellingen voledig af

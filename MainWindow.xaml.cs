@@ -64,5 +64,10 @@ namespace TussentijdsProject
             NewLogin nl = new NewLogin();
             nl.ShowDialog();
         }
+
+        private void cbLogin_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

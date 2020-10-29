@@ -37,7 +37,7 @@
                         <DataGridTextColumn Header="Naam" Binding="{Binding Naam}"/>
                         <DataGridTextColumn Header="Adress" Binding="{Binding Adress}"/>
                         <DataGridTextColumn Header="Telefoon" Binding="{Binding s.Telefoonnummer}"/>
-                        <DataGridTextColumn Header="Email" Binding="{Binding s.Emailadres}" />
+                        <DataGridHyperlinkColumn Header="Email" Binding="{Binding s.Emailadres}" />
                         <DataGridTextColumn Header="AangemaaktOp" Binding="{Binding s.AangemaaktOp, StringFormat=\{0:dd MMM yy HH:mm tt\}}"/>
                         <DataGridTextColumn Header="Opmerkingen" Width="*" Binding="{Binding s.Opmerking}"/>
                     </DataGrid.Columns>
