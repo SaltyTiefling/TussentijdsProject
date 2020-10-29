@@ -23,7 +23,7 @@
 
         <TextBlock Grid.Row="1" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center">Categorie:</TextBlock>
         <TextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="center" x:Name="txtCategorieNaam" IsEnabled="False" TextChanged="textfield_TextChanged" Height="18" />
-        <Image x:Name="epCategorieNaam" Grid.Column="2" Grid.Row="1" Source="error-7-64.png" Margin="10" VerticalAlignment="Center" Height="26" />
+        <Image ToolTip="geef een categorienaam in" x:Name="epCategorieNaam" Grid.Column="2" Grid.Row="1" Source="error-7-64.png" Margin="10" VerticalAlignment="Center" Height="26" />
 
         <Button Grid.Row="2" Grid.ColumnSpan="2" x:Name="Save" Content="Save" Click="Save_Click"/>
 

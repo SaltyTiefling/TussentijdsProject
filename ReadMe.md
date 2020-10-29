@@ -60,6 +60,10 @@
 - heb geprobeerd om de rollen van de persoon aan te passen
 - buttons enabled naar gelang de rol
 
-### Dag 12 (Disdag 27/10)
+### Dag 12 (Dinsdag 27/10)
 - toegelaten bewerkingen afgewerkt per rol 
 - begonnen met produtenaanpassing via file(json)
+
+### Dag 13 (Woensdag 28/10)
+- productenlijstaanpassen met json afgewerkt
+- errorhandeler aangepast met tooltips

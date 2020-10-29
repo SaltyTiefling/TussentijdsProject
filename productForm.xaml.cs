@@ -68,7 +68,7 @@ namespace TussentijdsProject
                 txtMarge.Text = product.Marge.ToString();
                 txtEenheid.Text = product.Eenheid.ToString();
                 txtBtw.Text = product.BTW.ToString();
-
+                
 
                 cbLeverancier.ItemsSource = ctx.Leveranciers.Select(s => s).ToList();
 
@@ -114,10 +114,12 @@ namespace TussentijdsProject
             {
                 epNaam.Visibility = Visibility.Visible;
                 answer.Add("Geef een naam in voor het product");
+                
             }
             else
             {
                 epNaam.Visibility = Visibility.Hidden;
+                txtNaam.ToolTip = null;
             }
 
             try
@@ -150,7 +152,7 @@ namespace TussentijdsProject
             catch (Exception)
             {
                 epEenheid.Visibility = Visibility.Visible;
-                answer.Add("Geef een geldige Marge");
+                answer.Add("Geef een geldige Eenheid");
             }
 
             try

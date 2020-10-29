@@ -80,8 +80,8 @@ namespace TussentijdsProject
                 lbrollen.IsEnabled =
                 btnImge.IsEnabled = editable;
 
-            btnImge.Visibility =
-                btnRollen.Visibility = (editable)? Visibility.Visible : Visibility.Hidden;
+            //btnImge.Visibility =
+            //    btnRollen.Visibility = (editable)? Visibility.Visible : Visibility.Hidden;
         }
         private void Save_Click(object sender, RoutedEventArgs e)
         {

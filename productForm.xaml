@@ -26,25 +26,26 @@
         <TextBlock Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" >Id:</TextBlock>
         <TextBlock Grid.Column="1" x:Name="lblId" VerticalAlignment="Center" >0</TextBlock>
 
+
         <TextBlock Grid.Row="1" Margin="20 0" HorizontalAlignment="Right" VerticalAlignment="Center" >Naam:</TextBlock>
         <TextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="center" x:Name="txtNaam" IsEnabled="False" TextChanged="txt_TextChanged"/>
-        <Image x:Name="epNaam" Grid.Column="2" Grid.Row="1" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
+        <Image ToolTip="geen een naam in" x:Name="epNaam" Grid.Column="2" Grid.Row="1" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
 
         <TextBlock Grid.Row="2" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" > Inkoopprijs:</TextBlock>
         <TextBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="txtinpkoopprijs" IsEnabled="False" TextChanged="txt_TextChanged"/>
-        <Image x:Name="epInkoopprijs" Grid.Column="2" Grid.Row="2" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
+        <Image ToolTip="geef een inkoop prijs in" x:Name="epInkoopprijs" Grid.Column="2" Grid.Row="2" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
 
         <TextBlock Grid.Row="3" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" > Marge:</TextBlock>
         <TextBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="txtMarge" IsEnabled="False" TextChanged="txt_TextChanged"/>
-        <Image x:Name="epMarge" Grid.Column="2" Grid.Row="3" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
+        <Image ToolTip="geef een marge prijs in" x:Name="epMarge" Grid.Column="2" Grid.Row="3" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
 
         <TextBlock Grid.Row="4" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" > Eenheid:</TextBlock>
         <TextBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="txtEenheid" IsEnabled="False" TextChanged="txt_TextChanged"/>
-        <Image x:Name="epEenheid" Grid.Column="2" Grid.Row="4" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
+        <Image ToolTip="geef een eenheidsprijs in" x:Name="epEenheid" Grid.Column="2" Grid.Row="4" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
 
         <TextBlock Grid.Row="5" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" > Btw:</TextBlock>
         <TextBox Grid.Column="1" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="txtBtw" IsEnabled="False" TextChanged="txt_TextChanged"/>
-        <Image x:Name="epBtw" Grid.Column="2" Grid.Row="5" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
+        <Image ToolTip="je btw persentage" x:Name="epBtw" Grid.Column="2" Grid.Row="5" Source="error-7-64.png" Margin="10 0" VerticalAlignment="Center" />
 
         <TextBlock Grid.Row="6" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" > Leverancier:</TextBlock>
         <ComboBox Grid.Column="1" Grid.Row="6" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="cbLeverancier" IsEnabled="False">

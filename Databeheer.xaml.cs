@@ -121,7 +121,7 @@ namespace TussentijdsProject
                             btnNieuw.IsEnabled =
                             btnEdit.IsEnabled =
                             btnFileEdit.IsEnabled = true;
-                            btnFileEdit.Visibility = Visibility.Hidden;
+                            btnFileEdit.Visibility = Visibility.Collapsed;
                             break;
                     }
 
@@ -155,7 +155,7 @@ namespace TussentijdsProject
                     }
                     else
                     {
-                        btnFileEdit.Visibility = Visibility.Hidden;
+                        btnFileEdit.Visibility = Visibility.Collapsed;
                     }
                     btnDelete.IsEnabled =
                     btnNieuw.IsEnabled =
@@ -472,24 +472,62 @@ namespace TussentijdsProject
         private void btnFileEdit_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFile = new OpenFileDialog();
-            openFile.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
+            openFile.Filter = "Json files (*.json)|*.json";
             openFile.ShowDialog();
 
-            using (StreamReader file = File.OpenText(openFile.FileName))
-            using (JsonTextReader reader = new JsonTextReader(file))
+            try
             {
-                try
+                using (StreamReader file = File.OpenText(openFile.FileName))
+                using (tussentijds_projectEntities1 ctx = new tussentijds_projectEntities1())
+                using (JsonTextReader reader = new JsonTextReader(file))
                 {
-                    JObject JOProduct = (JObject)JToken.ReadFrom(reader);
-                    
+                    JObject jOProduct = (JObject)JToken.ReadFrom(reader);
+                    dynamic dyProduct = jOProduct;
+                    selectedID = dyProduct.ProductID;
 
-                }
-                catch(Exception exeption)
-                {
-                    MessageBox.Show(exeption.Message);    
+                    if (ctx.Products.Select(s => s.ProductID).ToList().Contains(selectedID))
+                    {
+                        Debug.WriteLine("Product bestaat al");
+
+                        Product product = ctx.Products.Where(s => s.ProductID == selectedID).FirstOrDefault();
+                        product.Naam = dyProduct.Naam;
+                        product.Inkoopprijs = dyProduct.Inkoopprijs;
+                        product.Marge = dyProduct.Marge;
+                        product.Eenheid = dyProduct.Eenheid;
+                        product.BTW = dyProduct.BTW;
+                        product.LeverancierID = dyProduct.LeverancierID;
+                        product.CategorieID = dyProduct.CategorieID;
+                    }
+                    else
+                    {
+                        Debug.WriteLine("nieuw product?");
+
+                        Product newProduct = new Product();
+
+                        newProduct.Naam = dyProduct.Naam;
+                        newProduct.Inkoopprijs = dyProduct.Inkoopprijs;
+                        newProduct.Marge = dyProduct.Marge;
+                        newProduct.Eenheid = dyProduct.Eenheid;
+                        newProduct.BTW = dyProduct.BTW;
+                        newProduct.LeverancierID = dyProduct.LeverancierID;
+                        newProduct.CategorieID = dyProduct.CategorieID;
+
+
+                        if (MessageBox.Show($"het product met ID: {selectedID} bestaat nog niet wil {newProduct.Naam} toevoegen onder een nieuwe ID?", "invoegen product", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        {
+                            ctx.Products.Add(newProduct);
+                        }
+                    }
+                    ctx.SaveChanges();
+                    LaadLijsten();
                 }
             }
- 
+            catch (Exception)
+            {
+                MessageBox.Show("er is iet's mis gegaan check je Json file en probeer opnieuw");
+            }
         }
+
     }
 }
+

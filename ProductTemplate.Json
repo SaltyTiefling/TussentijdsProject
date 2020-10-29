@@ -1,0 +1,10 @@
+{
+"ProductID":0,
+"Naam":"",
+"Inkoopprijs": 0,
+"Marge": 0,
+"Eenheid": 0,
+"BTW": 0,
+"LeverancierID": 0,
+"CategorieID": 0
+}
